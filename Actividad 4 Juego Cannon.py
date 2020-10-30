@@ -23,19 +23,14 @@ def tap(x, y):
     if not inside(ball):
         ball.x = -199
         ball.y = -199
-        speed.x = (x + 650) / 25
-        speed.y = (y + 650) / 25
+        speed.x = (x + 450) / 25
+        speed.y = (y + 450) / 25
 
 # Funcion inside, funcion que verifica a través de un valor booleano que los
 # objetivos o el proyectil se encuentren dentro de los limites.
 def inside(xy):
     "Return True if xy within screen."
     return -200 < xy.x < 200 and -200 < xy.y < 200
-
-def redraw(z):
-    goto(z.x, z.y)
-    dot(20, 'blue')
-    update()
 
 # Funcion draw, funcion cuya funcionalidad es dibujar los objetivos y el
 # proyectil para el desarrollo del juego.
@@ -64,7 +59,7 @@ def move():
     "Move ball and targets."
     # Agrega los objetivos a nuestra lista definida al inicio del codigo, con
     # valor de la coord x = 200, y un valor de y aleatorio de -150 a 150.
-    if randrange(150) == 0:
+    if randrange(20) == 0:
         y = randrange(-150, 150)
         target = vector(200, y)
         targets.append(target)
@@ -72,12 +67,12 @@ def move():
     # Desplaza los objetivos agregados a la lista -5 en la coord x cada que se
     # realiza la iteración.
     for target in targets:
-        target.x -= 5
+        target.x -= 4
     
     # Verifica que mientras el proyectil se encuentre en la ventana, este tenga
     # cierta caida en la coord y, para simular la fuerza de la gravedad.
     if inside(ball):
-        speed.y -= 1.5
+        speed.y -= 0.75
         ball.move(speed)
     
     # Realiza una variable auxiliar de la lista creada al inicionde la funcion
@@ -100,7 +95,6 @@ def move():
     for target in targets:
         if not inside(target):
             target.x = 200
-            redraw(target)
     
     ontimer(move, 50)
 
